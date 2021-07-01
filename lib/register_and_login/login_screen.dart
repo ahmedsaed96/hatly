@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../register_and_login/login_cubit.dart';
 import '../register_and_login/login_states.dart';
 import '../share/constant.dart';
@@ -8,89 +9,119 @@ import '../view/widgets/text_field.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: BlocProvider(
-              create: (context) => LoginCubit(),
-              child: BlocConsumer<LoginCubit, LoginStates>(
-                listener: (context, state) {},
-                builder: (context, state) => Form(
-                  key: LoginCubit.get(context).formkey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Login',
-                        style: titleStyle(context),
-                      ),
-                      const SizedBox(height: 10.0),
-                      Text(
-                        'Login in to browse our hot offers',
-                        style: descrebtionStyle(context),
-                      ),
-                      const SizedBox(height: 40.0),
-                      buildTextFormField(
-                          controller: LoginCubit.get(context).emailController,
-                          name: 'Email',
-                          type: TextInputType.emailAddress,
-                          prefixIcon: Icons.email_outlined),
-                      const SizedBox(height: 25.0),
-                      buildTextFormField(
-                        onSavedFunction: () {
-                          //need to check him
-                          if (LoginCubit.get(context)
-                              .formkey
-                              .currentState!
-                              .validate()) {
-                            LoginCubit.get(context).userLogin(
-                                email: LoginCubit.get(context)
-                                    .emailController
-                                    .text,
-                                password: LoginCubit.get(context)
-                                    .passwordController
-                                    .text);
-                          }
-                          return;
-                        },
-                        controller: LoginCubit.get(context).passwordController,
-                        name: 'Password',
-                        type: TextInputType.visiblePassword,
-                        prefixIcon: Icons.lock_outlined,
-                        suffexIcon: IconButton(
-                            onPressed: () =>
-                                LoginCubit.get(context).changevisibilty(),
-                            icon: Icon(LoginCubit.get(context).suffixIcon)),
-                        obsecureText: LoginCubit.get(context).obsecureText,
-                      ),
-                      const SizedBox(height: 25.0),
-                      // this button not working perfectly
-                      buildLoginButton(context, state),
-                      const SizedBox(height: 35.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+    return BlocProvider(
+      create: (context) => LoginCubit(),
+      child: BlocProvider(
+        create: (context) => LoginCubit(),
+        child: BlocConsumer<LoginCubit, LoginStates>(
+          listener: (context, state) {
+            if (state is LoginSucsessState) {
+              if (state.loginModel.status!) {
+                //مش فاهم الشرط ده
+                debugPrint("msg is ${state.loginModel.message}");
+                Fluttertoast.showToast(
+                    // TODO:
+                    //مش عاوزة تشتغل
+                    //لو اشتغلت هنقلها في فنكشن منفصلة
+                    msg: state.loginModel.message.toString(),
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: Colors.green,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+              } else {
+                debugPrint("msg is ${state.loginModel.message}");
+                Fluttertoast.showToast(
+                    msg: state.loginModel.message.toString(),
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+              }
+            }
+          },
+          builder: (context, state) => Scaffold(
+            body: Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Form(
+                      key: LoginCubit.get(context).formkey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Don't have an acount ?  ",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                          Text(
+                            'Login',
+                            style: titleStyle(context),
                           ),
-                          TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              'REGISTER',
-                              style: TextStyle(
-                                  color: defaultColor,
-                                  fontSize: 17.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                          const SizedBox(height: 10.0),
+                          Text(
+                            'Login in to browse our hot offers',
+                            style: descrebtionStyle(context),
+                          ),
+                          const SizedBox(height: 40.0),
+                          buildTextFormField(
+                              controller:
+                                  LoginCubit.get(context).emailController,
+                              name: 'Email',
+                              type: TextInputType.emailAddress,
+                              prefixIcon: Icons.email_outlined),
+                          const SizedBox(height: 25.0),
+                          buildTextFormField(
+                            onSavedFunction: () {
+                              //need to check him
+                              if (LoginCubit.get(context)
+                                  .formkey
+                                  .currentState!
+                                  .validate()) {
+                                LoginCubit.get(context).userLogin(
+                                    email: LoginCubit.get(context)
+                                        .emailController
+                                        .text,
+                                    password: LoginCubit.get(context)
+                                        .passwordController
+                                        .text);
+                              }
+                              return;
+                            },
+                            controller:
+                                LoginCubit.get(context).passwordController,
+                            name: 'Password',
+                            type: TextInputType.visiblePassword,
+                            prefixIcon: Icons.lock_outlined,
+                            suffexIcon: IconButton(
+                                onPressed: () =>
+                                    LoginCubit.get(context).changevisibilty(),
+                                icon: Icon(LoginCubit.get(context).suffixIcon)),
+                            obsecureText: LoginCubit.get(context).obsecureText,
+                          ),
+                          const SizedBox(height: 25.0),
+                          // this button not working perfectly
+                          buildLoginButton(context, state),
+                          const SizedBox(height: 35.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "Don't have an acount ?  ",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  'REGISTER',
+                                  style: TextStyle(
+                                      color: defaultColor,
+                                      fontSize: 17.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
+                    )),
               ),
             ),
           ),

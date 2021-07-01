@@ -34,7 +34,6 @@ class _OnBoardingscreenState extends State<OnBoardingscreen> {
   ];
   PageController pageController = PageController();
   int index = 0;
-  //  Color? color=const  Color(0xFFFF9000);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

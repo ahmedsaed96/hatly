@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 // ignore: avoid_classes_with_only_static_members
 class DioHelper {
   static Dio? dio;
-  //void word from me!!!
+
   static void init() {
     dio = Dio(
       BaseOptions(
@@ -39,10 +39,11 @@ class DioHelper {
     String lang = 'ar',
     String? token,
   }) async {
-    dio!.options.headers = {
-      'lang': lang,
-      'Authorization': token,
-    };
+    // try
+    // dio!.options.headers = {
+    //   'lang': lang,
+    //   'Authorization': token,
+    // };
     return dio!.post(
       url,
       queryParameters: query,
