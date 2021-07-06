@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_abdullah_mansour/cache/cache_helper.dart';
 import 'package:shop_abdullah_mansour/models/onboarding_item_model.dart';
 import 'package:shop_abdullah_mansour/share/constant.dart';
 import 'package:shop_abdullah_mansour/register_and_login/login_screen.dart';
@@ -42,13 +43,7 @@ class _OnBoardingscreenState extends State<OnBoardingscreen> {
         elevation: 0.0,
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (_) => LoginScreen(),
-                  ),
-                  (route) => false);
-            },
+            onPressed: () => submit(context),
             child: const Text('Skip'),
           )
         ],
@@ -80,7 +75,8 @@ class _OnBoardingscreenState extends State<OnBoardingscreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Image.network(onBoardingList.image, fit: BoxFit.cover),
+            child: Image.asset('assets/images/icon.png'),
+            // child: Image.network(onBoardingList.image, fit: BoxFit.cover),
           ),
           buildText(onBoardingList.title, 40.0, buildTitleStyle()),
           buildText(onBoardingList.subtitle, 30.0, buildSubTitleStyle()),
@@ -103,11 +99,7 @@ class _OnBoardingscreenState extends State<OnBoardingscreen> {
                 FloatingActionButton(
                   onPressed: () {
                     if (index == length - 1) {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (_) => LoginScreen(),
-                          ),
-                          (route) => false);
+                      submit(context);
                     } else {
                       controller.nextPage(
                           duration: const Duration(seconds: 1),
@@ -154,4 +146,18 @@ class _OnBoardingscreenState extends State<OnBoardingscreen> {
       ),
     );
   }
+}
+
+void submit(BuildContext context) {
+  CacheHelper.setAnyValue(key: 'onBoarding', value: true).then((value) {
+    if (value) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (_) => LoginScreen(),
+          ),
+          (route) => false);
+    }
+  }).catchError((e) {
+    debugPrint('exception from saveOnBoardingToDB Func =$e');
+  });
 }
