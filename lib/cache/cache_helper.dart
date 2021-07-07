@@ -2,8 +2,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class CacheHelper {
-// وهعمل زر تسجيل خروج من لو داس عليه يمسح التوكين ويخليه يدخل ع تسجيل الدخول ع طول
-
   static SharedPreferences? preferences;
   static Future init() async {
     preferences = await SharedPreferences.getInstance();

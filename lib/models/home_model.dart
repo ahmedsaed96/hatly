@@ -41,6 +41,7 @@ class Product {
   dynamic oldPrice;
   String? image;
   String? name;
+  int? discount;
   String? description;
   // List<String> images = [];
   bool? inFavorites;
@@ -55,6 +56,7 @@ class Product {
     // images = json['images'] as List<String>;
     inFavorites = json['in_favorites'] as bool;
     inCart = json['in_cart'] as bool;
+    discount = json['discount'] as int;
   }
 }
 

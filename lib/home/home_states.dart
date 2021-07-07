@@ -9,3 +9,7 @@ class HomeProductsLoadingStates extends HomeStates {}
 class HomeProductsSuccesStates extends HomeStates {}
 
 class HomeProductsErrorStates extends HomeStates {}
+
+class HomeCategorySuccessStates extends HomeStates {}
+
+class HomeCategoryErrorStates extends HomeStates {}

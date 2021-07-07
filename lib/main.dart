@@ -15,7 +15,6 @@ import './register_and_login/bloc_observer.dart';
 import './register_and_login/login_screen.dart';
 
 import './view/screens/on_boarding_screen.dart';
-
 import 'share/constant.dart';
 
 // ignore: avoid_void_async
@@ -51,9 +50,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          //////////////////////////////////////
           BlocProvider(
-            create: (context) => HomeCubit()..getHomeData(),
+            create: (context) => HomeCubit()
+              ..getHomeData()
+              ..getCategoryData(),
           ),
           BlocProvider(
             create: (context) => LoginCubit(),
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
             bottomNavigationBarTheme: BottomNavigationBarThemeData(
                 backgroundColor: Colors.red,
                 selectedItemColor: Colors.blue.shade500,
-                unselectedItemColor: defaultColor.shade300),
+                unselectedItemColor: Colors.grey),
           ),
           title: 'Hatly APP',
           home: firstPage,

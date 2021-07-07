@@ -16,7 +16,7 @@ class DioHelper {
   static Future<Response> getData(
     String url,
     String? token, {
-    String lang = 'ar',
+    String lang = 'en',
     Map<String, dynamic>? query,
   }) async {
     dio!.options.headers = {
@@ -30,11 +30,23 @@ class DioHelper {
     );
   }
 
+  static Future<Response> getCategoryData(
+    String url, {
+    String lang = 'en',
+  }) async {
+    dio!.options.headers = {
+      'lang': lang,
+    };
+    return dio!.get(
+      url,
+    );
+  }
+
   static Future<Response> postData(
     String url,
     Map<String, dynamic>? data, {
     Map<String, dynamic>? query,
-    String lang = 'ar',
+    String lang = 'en',
     String? token,
   }) async {
     dio!.options.headers = {
