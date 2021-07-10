@@ -108,12 +108,12 @@ GridView buildGridView(HomeModel model) {
       mainAxisSpacing: 1.0,
       childAspectRatio: 1 / 1.4,
     ),
-    itemBuilder: (context, index) => buildGridViewItems(model, index),
+    itemBuilder: (context, index) => buildGridViewItems(model, index, context),
     itemCount: model.data!.products.length,
   );
 }
 
-Column buildGridViewItems(HomeModel model, int index) {
+Column buildGridViewItems(HomeModel model, int index, BuildContext? context) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -136,11 +136,16 @@ Column buildGridViewItems(HomeModel model, int index) {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              // ignore: unnecessary_string_interpolations
-              '${model.data!.products[index].name}',
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+            SizedBox(
+              //عملت السطر ده عشان مخليش سطر السعر يعتمد علي عدد اسطر الاسم
+              //دلوقتي هو هيبقي ثابت بغض النظر هل الاسم سطر ولا اتنين
+              height: size(context!).height / 20,
+              child: Text(
+                // ignore: unnecessary_string_interpolations
+                '${model.data!.products[index].name}',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             const SizedBox(height: 10.0),
             buildPriceRow(model, index)

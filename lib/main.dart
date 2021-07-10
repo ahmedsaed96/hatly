@@ -62,13 +62,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           //i need dark mode
-          theme: ThemeData(
-            primarySwatch: defaultColor,
-            bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                backgroundColor: Colors.red,
-                selectedItemColor: Colors.blue.shade500,
-                unselectedItemColor: Colors.grey),
-          ),
+          theme: lightTheme,
           title: 'Hatly APP',
           home: firstPage,
         ));

@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cache/cache_helper.dart';
-import '../categories/categories_scree.dart';
+import 'package:shop_abdullah_mansour/cache/cache_helper.dart';
+import 'package:shop_abdullah_mansour/categories/categories_screen.dart';
 import '../dio_helper/dio_helper.dart';
 import '../dio_helper/end_points.dart';
 import '../favorite/favorite_screen.dart';
 import '../home/home_page.dart';
 import '../models/category_model.dart';
 import '../models/home_model.dart';
-
 import '../settings/settings_screen.dart';
-
 import 'home_states.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
