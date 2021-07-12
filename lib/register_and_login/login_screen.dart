@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import '../register_and_login/login_cubit.dart';
 import '../register_and_login/login_states.dart';
 import '../share/constant.dart';
@@ -13,27 +12,10 @@ class LoginScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is LoginSucsessState) {
           if (state.loginModel.status!) {
-            //مش فاهم الشرط ده
-            debugPrint("msg is ${state.loginModel.message}");
-            Fluttertoast.showToast(
-                // TODO:
-                //مش عاوزة تشتغل
-                //لو اشتغلت هنقلها في فنكشن منفصلة
-                msg: state.loginModel.message.toString(),
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.green,
-                textColor: Colors.white,
-                fontSize: 16.0);
+            buildShowToast(state.loginModel.message, Colors.green);
           } else {
             debugPrint("msg is ${state.loginModel.message}");
-            Fluttertoast.showToast(
-                msg: state.loginModel.message.toString(),
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.red,
-                textColor: Colors.white,
-                fontSize: 16.0);
+            buildShowToast(state.loginModel.message, Colors.red);
           }
         }
       },
@@ -48,10 +30,6 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Image.asset(
-                        //   'assets/images/icon2.png',
-                        //   fit: BoxFit.cover,
-                        // ),
                         Text(
                           'Login',
                           style: titleStyle(context),

@@ -15,14 +15,18 @@ class FavoriteScreen extends StatelessWidget {
           builder: (context, state) {
             final OnlineFavorites? favorites =
                 HomeCubit.get(context).onlineFavorites;
-            return ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              itemCount: favorites!.data!.innerData!.length,
-              separatorBuilder: (BuildContext context, int index) =>
-                  const SizedBox(height: 5.0),
-              itemBuilder: (BuildContext context, int index) =>
-                  buildListItem(favorites, index, context),
-            );
+            return state is! HomeOnlineFavoritesLisLoadingState
+                ? ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: favorites!.data!.innerData!.length,
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(height: 5.0),
+                    itemBuilder: (BuildContext context, int index) =>
+                        buildListItem(favorites, index, context),
+                  )
+                : const Center(
+                    child: CircularProgressIndicator(),
+                  );
           },
         ),
       ),

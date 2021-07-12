@@ -14,7 +14,13 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: BlocConsumer<HomeCubit, HomeStates>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (state is HomeChangeLocalFavoriteErrorState) {
+              if (!state.favoriteModel!.status!) {
+                buildShowToast(state.favoriteModel!.message, Colors.red);
+              }
+            }
+          },
           builder: (context, state) {
             if (HomeCubit.get(context).homeModel == null ||
                 HomeCubit.get(context).categoryModel == null) {

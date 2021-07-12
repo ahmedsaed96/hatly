@@ -1,3 +1,5 @@
+import 'package:shop_abdullah_mansour/models/change_favorites_model.dart';
+
 abstract class HomeStates {}
 
 class HomeIntialState extends HomeStates {}
@@ -20,7 +22,9 @@ class HomeChangeFavoriteErrorState extends HomeStates {}
 
 class HomeChangeLocalFavoriteSuccessState extends HomeStates {}
 
-class HomeChangeLocalFavoriteErrorState extends HomeStates {}
+class HomeChangeLocalFavoriteErrorState extends HomeStates {
+  ChangeFavoriteModel? favoriteModel;
+}
 
 class HomeOnlineFavoritesLisLoadingState extends HomeStates {}
 

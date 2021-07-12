@@ -87,12 +87,12 @@ class HomeCubit extends Cubit<HomeStates> {
           ChangeFavoriteModel.fromJson(value.data as Map<String, dynamic>);
       if (!favoriteModel!.status!) {
         favorites[id] = !favorites[id]!;
-        emit(HomeChangeLocalFavoriteErrorState());
       } else {
-        getOnlineFavoritesList(); /////////////////
+        getOnlineFavoritesList();
       }
       emit(HomeChangeFavoriteSuccessState());
     }).catchError((e) {
+      favorites[id] = !favorites[id]!;
       emit(HomeChangeFavoriteErrorState());
       debugPrint(e.toString());
     });
@@ -100,7 +100,6 @@ class HomeCubit extends Cubit<HomeStates> {
 
   OnlineFavorites? onlineFavorites;
   void getOnlineFavoritesList() {
-    ////////////////////
     emit(HomeOnlineFavoritesLisLoadingState());
     DioHelper.getData(
       fAVORITES,
