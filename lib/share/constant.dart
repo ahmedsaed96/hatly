@@ -3,6 +3,7 @@ import 'package:shop_abdullah_mansour/cache/cache_helper.dart';
 import 'package:shop_abdullah_mansour/register_and_login/login_screen.dart';
 
 ThemeData? lightTheme = ThemeData(
+  // canvasColor: const Color(0xFFDBE6FD),
   primaryColor: primaryColor,
   accentColor: accentColor,
   unselectedWidgetColor: unselectedWidgetColor,

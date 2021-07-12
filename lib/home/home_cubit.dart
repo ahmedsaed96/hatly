@@ -3,6 +3,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_abdullah_mansour/cache/cache_helper.dart';
 import 'package:shop_abdullah_mansour/categories/categories_screen.dart';
+import 'package:shop_abdullah_mansour/models/change_favorites_model.dart';
+import 'package:shop_abdullah_mansour/models/get_favorites_model.dart';
 import '../dio_helper/dio_helper.dart';
 import '../dio_helper/end_points.dart';
 import '../favorite/favorite_screen.dart';
@@ -13,7 +15,7 @@ import '../settings/settings_screen.dart';
 import 'home_states.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
-  HomeCubit() : super(HomeIntialStates());
+  HomeCubit() : super(HomeIntialState());
   static HomeCubit get(BuildContext context) => BlocProvider.of(context);
   int currentIndex = 0;
   List<Widget> screens = [
@@ -24,20 +26,28 @@ class HomeCubit extends Cubit<HomeStates> {
   ];
   void changeIndex(int index) {
     currentIndex = index;
-    emit(HomeChangeIndexStates());
+    emit(HomeChangeIndexState());
   }
 
+  Map<int, bool> favorites = {};
   HomeModel? homeModel;
   void getHomeData() {
-    emit(HomeProductsLoadingStates());
+    emit(HomeProductsLoadingState());
     DioHelper.getData(
       hOME,
       CacheHelper.getString(key: 'token'),
     ).then((value) {
       homeModel = HomeModel.fromJson(value.data as Map<String, dynamic>);
-      emit(HomeProductsSuccesStates());
+      // ignore: avoid_function_literals_in_foreach_calls
+      homeModel!.data!.products.forEach((element) {
+        favorites.addAll({
+          // ignore: cast_nullable_to_non_nullable
+          element.id as int: element.inFavorites as bool,
+        });
+      });
+      emit(HomeProductsSuccesState());
     }).catchError((e) {
-      emit(HomeProductsErrorStates());
+      emit(HomeProductsErrorState());
       debugPrint('getHomeData Func error =$e');
     });
   }
@@ -49,10 +59,59 @@ class HomeCubit extends Cubit<HomeStates> {
     ).then((value) {
       categoryModel =
           CategoryModel.fromJson(value.data as Map<String, dynamic>);
-      emit(HomeCategorySuccessStates());
+      emit(HomeCategorySuccessState());
     }).catchError((e) {
-      emit(HomeCategoryErrorStates());
+      emit(HomeCategoryErrorState());
       debugPrint('categoryModel Func error =$e');
+    });
+  }
+
+  void getFavorites() {
+    DioHelper.getData(fAVORITES, CacheHelper.getString(key: 'token'))
+        .then((value) {})
+        .catchError((e) {
+      debugPrint(e.toString());
+    });
+  }
+
+  ChangeFavoriteModel? favoriteModel;
+  void addOrDeleteFromFavorites(int id) {
+    favorites[id] = !favorites[id]!;
+    emit(HomeChangeLocalFavoriteSuccessState());
+    DioHelper.postData(
+      fAVORITES,
+      {"product_id": id},
+      token: CacheHelper.getString(key: 'token'),
+    ).then((value) {
+      favoriteModel =
+          ChangeFavoriteModel.fromJson(value.data as Map<String, dynamic>);
+      if (!favoriteModel!.status!) {
+        favorites[id] = !favorites[id]!;
+        emit(HomeChangeLocalFavoriteErrorState());
+      } else {
+        getOnlineFavoritesList(); /////////////////
+      }
+      emit(HomeChangeFavoriteSuccessState());
+    }).catchError((e) {
+      emit(HomeChangeFavoriteErrorState());
+      debugPrint(e.toString());
+    });
+  }
+
+  OnlineFavorites? onlineFavorites;
+  void getOnlineFavoritesList() {
+    ////////////////////
+    emit(HomeOnlineFavoritesLisLoadingState());
+    DioHelper.getData(
+      fAVORITES,
+      CacheHelper.getString(key: 'token'),
+    ).then((value) {
+      emit(HomeOnlineFavoritesLisSuccesState());
+      onlineFavorites =
+          OnlineFavorites.fromJson(value.data as Map<String, dynamic>);
+    }).catchError((e) {
+      emit(HomeOnlineFavoritesLisErrorState());
+      debugPrint(e.toString());
     });
   }
 }

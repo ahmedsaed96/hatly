@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_abdullah_mansour/cache/cache_helper.dart';
 import 'package:shop_abdullah_mansour/home/home_cubit.dart';
 import 'package:shop_abdullah_mansour/home/home_states.dart';
 import 'package:shop_abdullah_mansour/models/category_model.dart';
@@ -11,18 +12,20 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<HomeCubit, HomeStates>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          if (HomeCubit.get(context).homeModel == null ||
-              HomeCubit.get(context).categoryModel == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return buildHomeScreen(HomeCubit.get(context).homeModel!,
-              HomeCubit.get(context).categoryModel!, context);
-        },
+      body: SafeArea(
+        child: BlocConsumer<HomeCubit, HomeStates>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (HomeCubit.get(context).homeModel == null ||
+                HomeCubit.get(context).categoryModel == null) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return buildHomeScreen(HomeCubit.get(context).homeModel!,
+                HomeCubit.get(context).categoryModel!, context);
+          },
+        ),
       ),
     );
   }
@@ -114,6 +117,7 @@ GridView buildGridView(HomeModel model) {
 }
 
 Column buildGridViewItems(HomeModel model, int index, BuildContext? context) {
+  print(CacheHelper.getString(key: 'token').toString());
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -131,37 +135,41 @@ Column buildGridViewItems(HomeModel model, int index, BuildContext? context) {
           ],
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              //عملت السطر ده عشان مخليش سطر السعر يعتمد علي عدد اسطر الاسم
-              //دلوقتي هو هيبقي ثابت بغض النظر هل الاسم سطر ولا اتنين
-              height: size(context!).height / 20,
-              child: Text(
-                // ignore: unnecessary_string_interpolations
-                '${model.data!.products[index].name}',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            const SizedBox(height: 10.0),
-            buildPriceRow(model, index)
-          ],
-        ),
-      ),
+      buildItemName(context, model, index),
     ],
   );
 }
 
-Row buildPriceRow(HomeModel model, int index) {
+Padding buildItemName(BuildContext? context, HomeModel model, int index) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          //عملت السطر ده عشان مخليش سطر السعر يعتمد علي عدد اسطر الاسم
+          //دلوقتي هو هيبقي ثابت بغض النظر هل الاسم سطر ولا اتنين
+          height: size(context!).height / 20,
+          child: Text(
+            // ignore: unnecessary_string_interpolations
+            '${model.data!.products[index].name}',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        const SizedBox(height: 10.0),
+        buildPriceRow(model, index, context)
+      ],
+    ),
+  );
+}
+
+Row buildPriceRow(HomeModel model, int index, BuildContext context) {
   return Row(
     children: [
       Text(
         '${model.data!.products[index].price}',
-        style: TextStyle(color: defaultColor),
+        style: const TextStyle(color: Colors.blue),
       ),
       const SizedBox(width: 10.0),
       if (model.data!.products[index].discount != 0)
@@ -174,14 +182,35 @@ Row buildPriceRow(HomeModel model, int index) {
           ),
         ),
       const Spacer(),
-      Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: GestureDetector(
-          onTap: () {},
-          child: const Icon(Icons.favorite_border),
-        ),
-      ),
+      buildFavoriteIcon(model, index, context),
     ],
+  );
+}
+
+Padding buildFavoriteIcon(HomeModel model, int index, BuildContext context) {
+  return Padding(
+    padding: const EdgeInsets.only(right: 8.0),
+    child: GestureDetector(
+      onTap: () {
+        HomeCubit.get(context)
+            // ignore: cast_nullable_to_non_nullable
+            .addOrDeleteFromFavorites(model.data!.products[index].id as int);
+        debugPrint(model.data!.products[index].id.toString());
+      },
+      child: buildHeartIcon(model, index, context),
+    ),
+  );
+}
+
+Icon buildHeartIcon(HomeModel model, int index, BuildContext context) {
+  return Icon(
+    // model.data!.products[index].inFavorites!
+    HomeCubit.get(context).favorites[model.data!.products[index].id]!
+        ? Icons.favorite
+        : Icons.favorite_border,
+    color: HomeCubit.get(context).favorites[model.data!.products[index].id]!
+        ? primaryColor
+        : defaultColor,
   );
 }
 

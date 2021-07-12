@@ -1,15 +1,29 @@
 abstract class HomeStates {}
 
-class HomeIntialStates extends HomeStates {}
+class HomeIntialState extends HomeStates {}
 
-class HomeChangeIndexStates extends HomeStates {}
+class HomeChangeIndexState extends HomeStates {}
 
-class HomeProductsLoadingStates extends HomeStates {}
+class HomeProductsLoadingState extends HomeStates {}
 
-class HomeProductsSuccesStates extends HomeStates {}
+class HomeProductsSuccesState extends HomeStates {}
 
-class HomeProductsErrorStates extends HomeStates {}
+class HomeProductsErrorState extends HomeStates {}
 
-class HomeCategorySuccessStates extends HomeStates {}
+class HomeCategorySuccessState extends HomeStates {}
 
-class HomeCategoryErrorStates extends HomeStates {}
+class HomeCategoryErrorState extends HomeStates {}
+
+class HomeChangeFavoriteSuccessState extends HomeStates {}
+
+class HomeChangeFavoriteErrorState extends HomeStates {}
+
+class HomeChangeLocalFavoriteSuccessState extends HomeStates {}
+
+class HomeChangeLocalFavoriteErrorState extends HomeStates {}
+
+class HomeOnlineFavoritesLisLoadingState extends HomeStates {}
+
+class HomeOnlineFavoritesLisSuccesState extends HomeStates {}
+
+class HomeOnlineFavoritesLisErrorState extends HomeStates {}

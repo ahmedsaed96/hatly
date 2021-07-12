@@ -9,19 +9,22 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<HomeCubit, HomeStates>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          final CategoryData? data = HomeCubit.get(context).categoryModel!.data;
-          return ListView.separated(
-            physics: const BouncingScrollPhysics(),
-            itemCount: data!.data!.length,
-            separatorBuilder: (BuildContext context, int index) =>
-                const SizedBox(height: 5.0),
-            itemBuilder: (BuildContext context, int index) =>
-                buildListItem(data, index, context),
-          );
-        },
+      body: SafeArea(
+        child: BlocConsumer<HomeCubit, HomeStates>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            final CategoryData? data =
+                HomeCubit.get(context).categoryModel!.data;
+            return ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              itemCount: data!.data!.length,
+              separatorBuilder: (BuildContext context, int index) =>
+                  const SizedBox(height: 5.0),
+              itemBuilder: (BuildContext context, int index) =>
+                  buildListItem(data, index, context),
+            );
+          },
+        ),
       ),
     );
   }
@@ -59,4 +62,5 @@ class CategoriesScreen extends StatelessWidget {
       ),
     );
   }
+
 }

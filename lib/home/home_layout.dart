@@ -33,7 +33,10 @@ class HomeLayout extends StatelessWidget {
 
   AppBar buildAppbar() {
     return AppBar(
-      title: const Text('Hatly'),
+      title: const Text(
+        'Hatly',
+        style: TextStyle(color: Colors.black),
+      ),
       backgroundColor: Colors.transparent,
       elevation: 0.0,
       actions: [

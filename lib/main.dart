@@ -27,7 +27,6 @@ void main() async {
   bool? isOnBoardingSkipped = CacheHelper.getbool(key: 'onBoarding') ?? false;
   // ignore: prefer_final_locals
   String? token = CacheHelper.getString(key: 'token');
-
   Widget? firstPage;
   if (isOnBoardingSkipped) {
     if (token != null) {
@@ -53,7 +52,9 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => HomeCubit()
               ..getHomeData()
-              ..getCategoryData(),
+              ..getCategoryData()
+              ..getFavorites()
+              ..getOnlineFavoritesList(),
           ),
           BlocProvider(
             create: (context) => LoginCubit(),
