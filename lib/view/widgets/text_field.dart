@@ -10,6 +10,7 @@ TextFormField buildTextFormField({
   Widget? suffexIcon,
   required String name,
   required TextEditingController controller,
+  String? labelText,
 }) {
   return TextFormField(
     onSaved: (newValue) => onSavedFunction,
@@ -23,7 +24,7 @@ TextFormField buildTextFormField({
     keyboardType: type,
     obscureText: obsecureText,
     decoration: InputDecoration(
-      labelText: 'Email Address',
+      labelText: labelText,
       enabledBorder: const OutlineInputBorder(),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: defaultColor),

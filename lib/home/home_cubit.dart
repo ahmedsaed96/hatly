@@ -5,6 +5,7 @@ import 'package:shop_abdullah_mansour/cache/cache_helper.dart';
 import 'package:shop_abdullah_mansour/categories/categories_screen.dart';
 import 'package:shop_abdullah_mansour/models/change_favorites_model.dart';
 import 'package:shop_abdullah_mansour/models/get_favorites_model.dart';
+import 'package:shop_abdullah_mansour/models/user_login_model.dart';
 import '../dio_helper/dio_helper.dart';
 import '../dio_helper/end_points.dart';
 import '../favorite/favorite_screen.dart';
@@ -29,6 +30,8 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(HomeChangeIndexState());
   }
 
+  TextEditingController profilenameController = TextEditingController();
+  TextEditingController profilePhoneController = TextEditingController();
   Map<int, bool> favorites = {};
   HomeModel? homeModel;
   void getHomeData() {
@@ -111,6 +114,24 @@ class HomeCubit extends Cubit<HomeStates> {
     }).catchError((e) {
       emit(HomeOnlineFavoritesLisErrorState());
       debugPrint(e.toString());
+    });
+  }
+
+  UserLoginModel? profileInfo;
+  void getprofileInfo() {
+    emit(HomeProfileInfoLoadingState());
+    DioHelper.getData(
+      pROFILE,
+      CacheHelper.getString(key: 'token'),
+    ).then((value) {
+      // debugPrint(value.data.toString()); الداتا جت بس مش عارف فين الخطا
+      emit(HomeProfileInfoSuccesState());
+      profileInfo = UserLoginModel.fromJson(value.data as Map<String, dynamic>);
+      debugPrint(profileInfo!.data!.name.toString());
+    }).catchError((e) {
+      emit(HomeProfileInfoErrorState());
+      debugPrint(e.toString());
+      debugPrint(profileInfo!.data!.name.toString());
     });
   }
 }

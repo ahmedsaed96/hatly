@@ -4,7 +4,7 @@ class UserLoginModel {
   Data? data;
   UserLoginModel.fromJson(Map<String, dynamic> json) {
     status = json['status'] as bool;
-    message = json['message'] as String;
+    message = json['message'] != null ? json['message'] as String : null;
     data = json['data'] != null
         ? Data.fromJson(json['data'] as Map<String, dynamic>)
         : null;

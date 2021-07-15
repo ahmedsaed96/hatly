@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_abdullah_mansour/cache/cache_helper.dart';
 import 'package:shop_abdullah_mansour/register_and_login/login_screen.dart';
-import 'package:shop_abdullah_mansour/register_and_login/login_states.dart';
 
 ThemeData? lightTheme = ThemeData(
   // canvasColor: const Color(0xFFDBE6FD),
@@ -33,13 +32,34 @@ void signOut(BuildContext context) {
 // ignore: prefer_function_declarations_over_variables
 Size Function(BuildContext context) size =
     (BuildContext context) => MediaQuery.of(context).size;
-  Future<bool?> buildShowToast(String? message, Color color) {
-    return Fluttertoast.showToast(
-        //not work???
-        msg: message.toString(),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: color,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
+Future<bool?> buildShowToast(String? message, Color color) {
+  return Fluttertoast.showToast(
+      //not work???
+      msg: message.toString(),
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: color,
+      textColor: Colors.white,
+      fontSize: 16.0);
+}
+
+AppBar buildAppbar(
+  String title, {
+  bool centerTitle = false,
+}) {
+  return AppBar(
+    title: Text(
+      title,
+      style: const TextStyle(color: Colors.black),
+    ),
+    backgroundColor: Colors.transparent,
+    elevation: 0.0,
+    centerTitle: centerTitle,
+    actions: [
+      IconButton(
+        onPressed: () {},
+        icon: const Icon(Icons.search),
+      )
+    ],
+  );
+}

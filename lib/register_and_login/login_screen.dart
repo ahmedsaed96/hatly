@@ -41,12 +41,14 @@ class LoginScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 40.0),
                         buildTextFormField(
+                            labelText: 'Email Address',
                             controller: LoginCubit.get(context).emailController,
                             name: 'Email',
                             type: TextInputType.emailAddress,
                             prefixIcon: Icons.email_outlined),
                         const SizedBox(height: 25.0),
                         buildTextFormField(
+                          labelText: 'Password',
                           onSavedFunction: () {
                             //need to check him
                             if (LoginCubit.get(context)

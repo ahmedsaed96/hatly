@@ -31,3 +31,9 @@ class HomeOnlineFavoritesLisLoadingState extends HomeStates {}
 class HomeOnlineFavoritesLisSuccesState extends HomeStates {}
 
 class HomeOnlineFavoritesLisErrorState extends HomeStates {}
+
+class HomeProfileInfoLoadingState extends HomeStates {}
+
+class HomeProfileInfoSuccesState extends HomeStates {}
+
+class HomeProfileInfoErrorState extends HomeStates {}

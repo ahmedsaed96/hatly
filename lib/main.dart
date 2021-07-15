@@ -42,9 +42,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final Widget firstPage;
-
   const MyApp(this.firstPage);
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -54,7 +52,8 @@ class MyApp extends StatelessWidget {
               ..getHomeData()
               ..getCategoryData()
               ..getFavorites()
-              ..getOnlineFavoritesList(),
+              ..getOnlineFavoritesList()
+              ..getprofileInfo(),
           ),
           BlocProvider(
             create: (context) => LoginCubit(),

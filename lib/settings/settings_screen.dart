@@ -1,13 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:shop_abdullah_mansour/home/home_cubit.dart';
+import 'package:shop_abdullah_mansour/settings/update_profile_screen.dart';
+import 'package:shop_abdullah_mansour/share/constant.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Text('SettingsScreen'),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Card(
+                child: ListTile(
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                  title: const Text('Edit Your Information'),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => UpdateProfileScreen())),
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  trailing: const Icon(Icons.logout),
+                  title: const Text('Log Out'),
+                  onTap: () => signOut(context),
+                ),
+              ),
+            ],
+          ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => HomeCubit.get(context).getprofileInfo(),
       ),
     );
   }

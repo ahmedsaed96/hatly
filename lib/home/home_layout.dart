@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_abdullah_mansour/home/home_cubit.dart';
 import 'package:shop_abdullah_mansour/home/home_states.dart';
+import 'package:shop_abdullah_mansour/share/constant.dart';
 
 class HomeLayout extends StatelessWidget {
   @override
@@ -9,7 +10,7 @@ class HomeLayout extends StatelessWidget {
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {},
       builder: (context, state) => Scaffold(
-        appBar: buildAppbar(),
+        appBar: buildAppbar('Hatly'),
         body:
             HomeCubit.get(context).screens[HomeCubit.get(context).currentIndex],
         bottomNavigationBar: buildButtomNavBar(context),
@@ -31,20 +32,4 @@ class HomeLayout extends StatelessWidget {
     );
   }
 
-  AppBar buildAppbar() {
-    return AppBar(
-      title: const Text(
-        'Hatly',
-        style: TextStyle(color: Colors.black),
-      ),
-      backgroundColor: Colors.transparent,
-      elevation: 0.0,
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.search),
-        )
-      ],
-    );
-  }
 }
