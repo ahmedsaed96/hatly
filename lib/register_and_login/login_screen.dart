@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_abdullah_mansour/register_and_login/register_page.dart';
 import '../register_and_login/login_cubit.dart';
 import '../register_and_login/login_states.dart';
 import '../share/constant.dart';
@@ -81,23 +82,30 @@ class LoginScreen extends StatelessWidget {
                               "Don't have an acount ?  ",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                'REGISTER',
-                                style: TextStyle(
-                                    color: defaultColor,
-                                    fontSize: 17.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
+                            buildRegisterButton(context),
                           ],
                         ),
                       ],
                     ),
                   )),
             ),
+         
           ),
+        ),
+      ),
+    );
+  }
+
+  TextButton buildRegisterButton(BuildContext context) {
+    return TextButton(
+      onPressed: () => Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => RegisterScreen())),
+      child: Text(
+        'REGISTER',
+        style: TextStyle(
+          color: primaryColor,
+          fontSize: 17.0,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
@@ -143,8 +151,8 @@ class LoginScreen extends StatelessWidget {
       onPressed: () {},
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(double.infinity, 50.0),
-        primary: Colors.blueGrey.shade100,
-        side: BorderSide(color: defaultColor.shade200),
+        primary: primaryColor,
+        side: BorderSide(color: defaultColor),
         elevation: 0.0,
       ),
       child: const Center(

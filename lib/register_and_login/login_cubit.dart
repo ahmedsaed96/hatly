@@ -19,7 +19,11 @@ class LoginCubit extends Cubit<LoginStates> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
-
+  TextEditingController registerUserNameController = TextEditingController();
+  TextEditingController registerEmailController = TextEditingController();
+  TextEditingController registerPasswordController = TextEditingController();
+  TextEditingController registerPhoneController = TextEditingController();
+  GlobalKey<FormState> registerFormkey = GlobalKey<FormState>();
   void changevisibilty() {
     obsecureText = !obsecureText;
     if (suffixIcon == Icons.visibility) {

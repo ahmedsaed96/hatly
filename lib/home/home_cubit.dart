@@ -124,7 +124,6 @@ class HomeCubit extends Cubit<HomeStates> {
       pROFILE,
       CacheHelper.getString(key: 'token'),
     ).then((value) {
-      // debugPrint(value.data.toString()); الداتا جت بس مش عارف فين الخطا
       emit(HomeProfileInfoSuccesState());
       profileInfo = UserLoginModel.fromJson(value.data as Map<String, dynamic>);
       debugPrint(profileInfo!.data!.name.toString());
