@@ -19,11 +19,7 @@ class LoginCubit extends Cubit<LoginStates> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  TextEditingController registerUserNameController = TextEditingController();
-  TextEditingController registerEmailController = TextEditingController();
-  TextEditingController registerPasswordController = TextEditingController();
-  TextEditingController registerPhoneController = TextEditingController();
-  GlobalKey<FormState> registerFormkey = GlobalKey<FormState>();
+
   void changevisibilty() {
     obsecureText = !obsecureText;
     if (suffixIcon == Icons.visibility) {
@@ -34,6 +30,7 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(LoginchangevisibiltyState());
   }
 
+  UserLoginModel? loginModel;
   void userLogin(
       {required String email,
       required String password,
@@ -48,15 +45,41 @@ class LoginCubit extends Cubit<LoginStates> {
         'password': password,
       },
     ).then((value) {
-      final UserLoginModel loginModel =
-          UserLoginModel.fromJson(value.data as Map<String, dynamic>);
+      loginModel = UserLoginModel.fromJson(value.data as Map<String, dynamic>);
       storeApiLocallAndNavigate(
         context!,
-        loginModel.data!.token,
+        loginModel!.data!.token,
         nameController!,
         passwordController!,
       );
-      emit(LoginSucsessState(loginModel));
+      emit(LoginSucsessState(loginModel!));
+    }).catchError((error) {
+      debugPrint('error from user login fun =$error');
+      emit(LoginerrorState(error.toString()));
+    });
+  }
+    void updateUserInfo(
+      {required String email,
+      required String password,
+      required BuildContext? context,
+      TextEditingController? nameController,
+      TextEditingController? passwordController}) {
+    emit(LoginLoadingState());
+    DioHelper.postData(
+      lOGIN,
+      {
+        'email': email,
+        'password': password,
+      },
+    ).then((value) {
+      loginModel = UserLoginModel.fromJson(value.data as Map<String, dynamic>);
+      storeApiLocallAndNavigate(
+        context!,
+        loginModel!.data!.token,
+        nameController!,
+        passwordController!,
+      );
+      emit(LoginSucsessState(loginModel!));
     }).catchError((error) {
       debugPrint('error from user login fun =$error');
       emit(LoginerrorState(error.toString()));

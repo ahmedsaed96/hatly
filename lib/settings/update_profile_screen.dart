@@ -37,6 +37,15 @@ class UpdateProfileScreen extends StatelessWidget {
                     name: 'phone',
                     controller: HomeCubit.get(context).profilePhoneController,
                   ),
+                  const SizedBox(height: 20.0),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 45.0,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: const Text('Update'),
+                    ),
+                  )
                 ],
               ),
             );

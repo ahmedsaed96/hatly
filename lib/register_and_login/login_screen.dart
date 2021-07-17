@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_abdullah_mansour/register_and_login/register_page.dart';
+import 'package:shop_abdullah_mansour/register_and_login/register_screen.dart';
+
 import '../register_and_login/login_cubit.dart';
 import '../register_and_login/login_states.dart';
 import '../share/constant.dart';
@@ -89,7 +90,6 @@ class LoginScreen extends StatelessWidget {
                     ),
                   )),
             ),
-         
           ),
         ),
       ),
@@ -98,8 +98,8 @@ class LoginScreen extends StatelessWidget {
 
   TextButton buildRegisterButton(BuildContext context) {
     return TextButton(
-      onPressed: () => Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => RegisterScreen())),
+      onPressed: () => Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => RegisterScreen())),
       child: Text(
         'REGISTER',
         style: TextStyle(

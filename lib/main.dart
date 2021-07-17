@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_abdullah_mansour/home/home_layout.dart';
 
 import 'package:shop_abdullah_mansour/register_and_login/login_cubit.dart';
+import 'package:shop_abdullah_mansour/register_and_login/register_cubit.dart';
 
 import './cache/cache_helper.dart';
 
@@ -58,6 +59,9 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => LoginCubit(),
           ),
+          BlocProvider(
+            create: (context) => RegisterCubit(),
+          )
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
