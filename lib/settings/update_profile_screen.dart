@@ -19,39 +19,68 @@ class UpdateProfileScreen extends StatelessWidget {
                 profileInfo!.data!.name!;
             HomeCubit.get(context).profilePhoneController.text =
                 profileInfo.data!.phone!;
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 15.0),
-                  buildTextFormField(
-                    type: TextInputType.name,
-                    prefixIcon: Icons.person,
-                    name: 'name',
-                    controller: HomeCubit.get(context).profilenameController,
-                  ),
-                  const SizedBox(height: 15.0),
-                  buildTextFormField(
-                    type: TextInputType.phone,
-                    prefixIcon: Icons.phone,
-                    name: 'phone',
-                    controller: HomeCubit.get(context).profilePhoneController,
-                  ),
-                  const SizedBox(height: 20.0),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 45.0,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('Update'),
-                    ),
+            return HomeCubit.get(context).profileInfo == null
+                ? const Center(
+                    child: CircularProgressIndicator(),
                   )
-                ],
-              ),
-            );
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 15.0),
+                          buildTextFormField(
+                            type: TextInputType.name,
+                            prefixIcon: Icons.person,
+                            name: 'name',
+                            controller:
+                                HomeCubit.get(context).profilenameController,
+                          ),
+                          const SizedBox(height: 15.0),
+                          buildTextFormField(
+                            type: TextInputType.phone,
+                            prefixIcon: Icons.phone,
+                            name: 'phone',
+                            controller:
+                                HomeCubit.get(context).profilePhoneController,
+                          ),
+                          const SizedBox(height: 15.0),
+                          buildTextFormField(
+                            type: TextInputType.visiblePassword,
+                            prefixIcon: Icons.lock_outlined,
+                            labelText: 'Enter new password',
+                            name: 'password',
+                            controller: HomeCubit.get(context)
+                                .profilePasswordController,
+                          ),
+                          const SizedBox(height: 20.0),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 45.0,
+                            child: ElevatedButton(
+                              onPressed: () => HomeCubit.get(context)
+                                  .updateUserInfo(
+                                      context: context,
+                                      name: HomeCubit.get(context)
+                                          .profilenameController
+                                          .text,
+                                      password: HomeCubit.get(context)
+                                          .profilePasswordController
+                                          .text,
+                                      phone: HomeCubit.get(context)
+                                          .profilePhoneController
+                                          .text),
+                              child: const Text('Update'),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
           },
         ),
       ),
     );
   }
 }
+//email

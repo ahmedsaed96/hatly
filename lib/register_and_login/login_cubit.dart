@@ -54,34 +54,7 @@ class LoginCubit extends Cubit<LoginStates> {
       );
       emit(LoginSucsessState(loginModel!));
     }).catchError((error) {
-      debugPrint('error from user login fun =$error');
-      emit(LoginerrorState(error.toString()));
-    });
-  }
-    void updateUserInfo(
-      {required String email,
-      required String password,
-      required BuildContext? context,
-      TextEditingController? nameController,
-      TextEditingController? passwordController}) {
-    emit(LoginLoadingState());
-    DioHelper.postData(
-      lOGIN,
-      {
-        'email': email,
-        'password': password,
-      },
-    ).then((value) {
-      loginModel = UserLoginModel.fromJson(value.data as Map<String, dynamic>);
-      storeApiLocallAndNavigate(
-        context!,
-        loginModel!.data!.token,
-        nameController!,
-        passwordController!,
-      );
-      emit(LoginSucsessState(loginModel!));
-    }).catchError((error) {
-      debugPrint('error from user login fun =$error');
+      debugPrint('error userLogin fun =$error');
       emit(LoginerrorState(error.toString()));
     });
   }

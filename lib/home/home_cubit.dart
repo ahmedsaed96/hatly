@@ -31,7 +31,9 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   TextEditingController profilenameController = TextEditingController();
+ 
   TextEditingController profilePhoneController = TextEditingController();
+  TextEditingController profilePasswordController = TextEditingController();
   Map<int, bool> favorites = {};
   HomeModel? homeModel;
   void getHomeData() {
@@ -131,6 +133,33 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(HomeProfileInfoErrorState());
       debugPrint(e.toString());
       debugPrint(profileInfo!.data!.name.toString());
+    });
+  }
+
+  void updateUserInfo({
+    required String name,
+    required String password,
+    required String phone,
+    required BuildContext? context,
+    TextEditingController? nameController,
+    TextEditingController? passwordController,
+    
+  }) {
+    emit(UpdateLoadingState());
+    DioHelper.putData(
+      uPDATEPROFILE,
+      {
+        'name': name,
+        'password': password,
+        'phone': phone,
+      },token: CacheHelper.getString(key: 'token'),
+    ).then((value) {
+      profileInfo = UserLoginModel.fromJson(value.data as Map<String, dynamic>);
+      debugPrint(value.data.toString());
+      emit(UpdatesuccesState());
+    }).catchError((error) {
+      debugPrint('error from updateUserInfo fun =$error');
+      emit(UpdateErorrState());
     });
   }
 }

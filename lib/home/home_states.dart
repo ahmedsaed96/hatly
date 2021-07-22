@@ -1,4 +1,5 @@
 import 'package:shop_abdullah_mansour/models/change_favorites_model.dart';
+import 'package:shop_abdullah_mansour/models/user_login_model.dart';
 
 abstract class HomeStates {}
 
@@ -35,5 +36,10 @@ class HomeOnlineFavoritesLisErrorState extends HomeStates {}
 class HomeProfileInfoLoadingState extends HomeStates {}
 
 class HomeProfileInfoSuccesState extends HomeStates {}
-
 class HomeProfileInfoErrorState extends HomeStates {}
+
+class UpdateLoadingState extends HomeStates {}
+
+class UpdatesuccesState extends HomeStates {}
+
+class UpdateErorrState extends HomeStates {}

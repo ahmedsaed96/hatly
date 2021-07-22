@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shop_abdullah_mansour/home/home_cubit.dart';
 import 'package:shop_abdullah_mansour/settings/update_profile_screen.dart';
 import 'package:shop_abdullah_mansour/share/constant.dart';
 
@@ -30,9 +29,6 @@ class SettingsScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => HomeCubit.get(context).getprofileInfo(),
       ),
     );
   }

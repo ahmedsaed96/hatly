@@ -53,8 +53,27 @@ class DioHelper {
       'Content-Type': 'application/json',
       'lang': lang,
       'Authorization': token ?? '',
+      // 'Access-Control-Allow-Origin':' *',for web
     };
     return dio!.post(
+      url,
+      queryParameters: query,
+      data: data,
+    );
+  }
+    static Future<Response> putData(
+    String url,
+    Map<String, dynamic>? data, {
+    Map<String, dynamic>? query,
+    String lang = 'en',
+    String? token,
+  }) async {
+    dio!.options.headers = {
+      'Content-Type': 'application/json',
+      'lang': lang,
+      'Authorization': token ?? '',
+    };
+    return dio!.put(
       url,
       queryParameters: query,
       data: data,

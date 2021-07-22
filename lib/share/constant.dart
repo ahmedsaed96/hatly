@@ -48,6 +48,7 @@ AppBar buildAppbar(
   bool centerTitle = false,
 }) {
   return AppBar(
+    iconTheme: IconThemeData(color: primaryColor),
     title: Text(
       title,
       style: const TextStyle(color: Colors.black),

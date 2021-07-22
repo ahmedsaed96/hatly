@@ -7,7 +7,6 @@ import 'package:shop_abdullah_mansour/share/constant.dart';
 import 'package:shop_abdullah_mansour/view/widgets/text_field.dart';
 
 class RegisterScreen extends StatelessWidget {
-  // GlobalKey<FormState> registerFormkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +20,16 @@ class RegisterScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
             child: BlocConsumer<RegisterCubit, RegisterStates>(
-              listener: (context, state) {},
+              listener: (context, state) {
+                if (state is RegisterSucsessState) {
+                  if (state.registerModel.status!) {
+                    buildShowToast(state.registerModel.message, Colors.green);
+                  } else {
+                    debugPrint("msg is ${state.registerModel.message}");
+                    buildShowToast(state.registerModel.message, Colors.red);
+                  }
+                }
+              },
               builder: (context, state) {
                 final cubit = RegisterCubit.get(context);
                 return Form(
@@ -117,7 +125,7 @@ class RegisterScreen extends StatelessWidget {
               .registerFormkey
               .currentState!
               .validate()) {
-            debugPrint('hello very one');
+            registerIfValidate(context);
           } else {
             return;
           }
@@ -131,6 +139,18 @@ class RegisterScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void registerIfValidate(BuildContext context) {
+    return RegisterCubit.get(context).userRegister(
+      email: RegisterCubit.get(context).registerEmailController.text,
+      name: RegisterCubit.get(context).registerUserNameController.text,
+      phone: RegisterCubit.get(context).registerPhoneController.text,
+      password: RegisterCubit.get(context).registerPasswordController.text,
+      context: context,
+      nameController: RegisterCubit.get(context).registerEmailController,
+      passwordController: RegisterCubit.get(context).registerPasswordController,
     );
   }
 }

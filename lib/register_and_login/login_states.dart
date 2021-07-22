@@ -18,5 +18,3 @@ class LoginerrorState extends LoginStates {
 
 class LoginchangevisibiltyState extends LoginStates {}
 
-// class UserLoginState extends LoginStates {}
-//

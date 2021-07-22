@@ -160,7 +160,6 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-
   void loginIfValidate(BuildContext context) {
     return LoginCubit.get(context).userLogin(
       email: LoginCubit.get(context).emailController.text,
