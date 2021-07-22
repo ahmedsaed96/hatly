@@ -9,7 +9,7 @@ class UpdateProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppbar('Update Profile', centerTitle: true),
+      appBar: buildAppbar('Update Profile', context, centerTitle: true),
       body: SafeArea(
         child: BlocConsumer<HomeCubit, HomeStates>(
           listener: (context, state) {},
@@ -17,6 +17,8 @@ class UpdateProfileScreen extends StatelessWidget {
             final profileInfo = HomeCubit.get(context).profileInfo;
             HomeCubit.get(context).profilenameController.text =
                 profileInfo!.data!.name!;
+            HomeCubit.get(context).profileEmailController.text =
+                profileInfo.data!.email!;
             HomeCubit.get(context).profilePhoneController.text =
                 profileInfo.data!.phone!;
             return HomeCubit.get(context).profileInfo == null
@@ -28,6 +30,8 @@ class UpdateProfileScreen extends StatelessWidget {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
+                          if (state is UpdateLoadingState)
+                            const LinearProgressIndicator(),
                           const SizedBox(height: 15.0),
                           buildTextFormField(
                             type: TextInputType.name,
@@ -46,12 +50,11 @@ class UpdateProfileScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 15.0),
                           buildTextFormField(
-                            type: TextInputType.visiblePassword,
-                            prefixIcon: Icons.lock_outlined,
-                            labelText: 'Enter new password',
-                            name: 'password',
-                            controller: HomeCubit.get(context)
-                                .profilePasswordController,
+                            type: TextInputType.emailAddress,
+                            prefixIcon: Icons.email_outlined,
+                            name: 'email',
+                            controller:
+                                HomeCubit.get(context).profileEmailController,
                           ),
                           const SizedBox(height: 20.0),
                           SizedBox(
@@ -60,12 +63,11 @@ class UpdateProfileScreen extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () => HomeCubit.get(context)
                                   .updateUserInfo(
-                                      context: context,
                                       name: HomeCubit.get(context)
                                           .profilenameController
                                           .text,
-                                      password: HomeCubit.get(context)
-                                          .profilePasswordController
+                                      email: HomeCubit.get(context)
+                                          .profileEmailController
                                           .text,
                                       phone: HomeCubit.get(context)
                                           .profilePhoneController

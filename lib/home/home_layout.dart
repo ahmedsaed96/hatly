@@ -10,7 +10,7 @@ class HomeLayout extends StatelessWidget {
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {},
       builder: (context, state) => Scaffold(
-        appBar: buildAppbar('Hatly'),
+        appBar: buildAppbar('Hatly',context),
         body:
             HomeCubit.get(context).screens[HomeCubit.get(context).currentIndex],
         bottomNavigationBar: buildButtomNavBar(context),

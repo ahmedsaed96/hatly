@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_abdullah_mansour/cache/cache_helper.dart';
 import 'package:shop_abdullah_mansour/register_and_login/login_screen.dart';
+import 'package:shop_abdullah_mansour/search/search_cubit.dart';
+import 'package:shop_abdullah_mansour/search/search_screen.dart';
 
 ThemeData? lightTheme = ThemeData(
   // canvasColor: const Color(0xFFDBE6FD),
@@ -44,7 +46,8 @@ Future<bool?> buildShowToast(String? message, Color color) {
 }
 
 AppBar buildAppbar(
-  String title, {
+  String title,
+  BuildContext? context, {
   bool centerTitle = false,
 }) {
   return AppBar(
@@ -58,7 +61,10 @@ AppBar buildAppbar(
     centerTitle: centerTitle,
     actions: [
       IconButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context!)
+              .push(MaterialPageRoute(builder: (context) => SearchScreen()));
+        },
         icon: const Icon(Icons.search),
       )
     ],

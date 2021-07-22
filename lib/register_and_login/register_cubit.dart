@@ -73,6 +73,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
       emit(RegisterSucsessState(registerModel!));
     }).catchError((error) {
       debugPrint('error userRegister fun =$error');
+
       emit(RegistererrorState(error.toString()));
     });
   }

@@ -31,7 +31,8 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   TextEditingController profilenameController = TextEditingController();
- 
+  TextEditingController profileEmailController = TextEditingController();
+
   TextEditingController profilePhoneController = TextEditingController();
   TextEditingController profilePasswordController = TextEditingController();
   Map<int, bool> favorites = {};
@@ -138,21 +139,18 @@ class HomeCubit extends Cubit<HomeStates> {
 
   void updateUserInfo({
     required String name,
-    required String password,
     required String phone,
-    required BuildContext? context,
-    TextEditingController? nameController,
-    TextEditingController? passwordController,
-    
+    required String email,
   }) {
     emit(UpdateLoadingState());
     DioHelper.putData(
       uPDATEPROFILE,
       {
         'name': name,
-        'password': password,
+        'email':email,
         'phone': phone,
-      },token: CacheHelper.getString(key: 'token'),
+      },
+      token: CacheHelper.getString(key: 'token'),
     ).then((value) {
       profileInfo = UserLoginModel.fromJson(value.data as Map<String, dynamic>);
       debugPrint(value.data.toString());
